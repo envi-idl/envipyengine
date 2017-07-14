@@ -1,12 +1,18 @@
 
 
-**************************
-ENVI Py for ArcGIS Library
-**************************
+**************
+ENVI Py Engine
+**************
 
 Installation
 ============
 
-Install envipyengine using pip::
+Install the ENVI Py Engine using pip::
 
     pip install envipyengine
+
+Documentation
+=============
+
+For the full API Documentation visit: .. _ReadTheDocs: http://envi-py-engine.readthedocs.io
+
