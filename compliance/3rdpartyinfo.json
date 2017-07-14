@@ -1,0 +1,12 @@
+{
+    "None": {
+        "version": "",
+        "procurement": "",
+        "description": "",
+        "productFeature": "",
+        "copyright": "",
+        "licenseType": "",
+        "encryption": "no",
+        "notes": "No 3rd party libraries are distributed with ENVI Py."
+    }
+}

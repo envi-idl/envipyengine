@@ -1,0 +1,10 @@
+
+coverage==4.1
+pylint==1.5.4
+setuptools==19.2
+
+Sphinx==1.4.1
+Sphinx-PyPI-upload==0.2.1
+twine==1.9.1
+unittest-xml-reporting==2.1.0
+wheel==0.26

@@ -1,0 +1,7 @@
+
+include *.txt
+
+include envipyengine/test/*
+
+include doc/source/*.py
+include doc/source/*.rst
