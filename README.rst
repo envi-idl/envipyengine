@@ -14,5 +14,5 @@ Install the ENVI Py Engine using pip::
 Documentation
 =============
 
-For the full API Documentation visit: http://envi-py-engine.readthedocs.io
+For the full API documentation visit: http://envi-py-engine.readthedocs.io
 
