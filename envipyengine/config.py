@@ -111,7 +111,7 @@ def _system_config_file():
         config_path = os.path.sep.join([os.path.sep + 'Library', 'Preferences',
                                         _APP_DIRNAME, _CONFIG_FILENAME])
     else:
-        config_path = os.path.sep.join([os.path.sep + '', _APP_DIRNAME,
+        config_path = os.path.sep.join(['', 'var', 'lib', _APP_DIRNAME,
                                         _CONFIG_FILENAME])
     return config_path
 
