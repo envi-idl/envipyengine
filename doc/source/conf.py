@@ -50,7 +50,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'envipyengine'
+project = u'ENVI Py Engine'
 copyright = u'2017 Exelis Visual Information Solutions, Inc.'
 author = u'Exelis Visual Information Solutions, Inc.'
 
