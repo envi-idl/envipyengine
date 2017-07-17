@@ -5,6 +5,7 @@ setuptools==19.2
 
 Sphinx==1.4.1
 Sphinx-PyPI-upload==0.2.1
+sphinx_rtd_theme==0.2.4
 twine==1.9.1
 unittest-xml-reporting==2.1.0
 wheel==0.26
