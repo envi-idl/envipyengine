@@ -53,7 +53,10 @@ import os
 import sys
 
 import ctypes
-from ctypes import wintypes, windll
+
+if sys.platform == 'win32':
+    from ctypes import wintypes, windll
+
 
 try:
     from ConfigParser import ConfigParser  # Python 2
