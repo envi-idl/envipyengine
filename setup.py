@@ -45,6 +45,7 @@ setup(name='envipyengine',
       version='1.0.2',
       description='ENVI Python Engine',
       long_description=long_description,
+      url='https://github.com/envi-idl/envipyengine'
       author='Exelis Visual Information Solutions, Inc.',
       packages=['envipyengine',
                 'envipyengine.taskengine'],
