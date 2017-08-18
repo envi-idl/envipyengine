@@ -42,13 +42,14 @@ with open(os.path.join(here, 'README.rst')) as f:
     long_description = f.read()
 
 setup(name='envipyengine',
-      version='1.0.3',
+      version='1.0.4',
       description='ENVI Python Engine',
       long_description=long_description,
       url='https://github.com/envi-idl/envipyengine',
       author='Exelis Visual Information Solutions, Inc.',
       packages=['envipyengine',
                 'envipyengine.taskengine'],
+      scripts=['scripts/envipyengineconfig.py'],
       cmdclass=dict(test=TestCommand),
       license='MIT',
       keywords='envi idl'
