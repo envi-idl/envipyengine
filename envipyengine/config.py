@@ -83,14 +83,18 @@ def _user_config_file():
 
     :return: String specifying the full path to the settings.cfg file
     """
-    user_dir = os.path.expanduser('~')
     if sys.platform == 'win32':
-        config_path = os.path.sep.join([user_dir, 'AppData', 'Local',
-                                        _APP_DIRNAME, _CONFIG_FILENAME])
+        if 'LOCALAPPDATA' in os.environ:
+            user_dir = os.getenv('LOCALAPPDATA')
+        else:
+            user_dir = os.path.join(os.path.expanduser('~'), 'AppData', 'Local')
+        config_path = os.path.join(user_dir, _APP_DIRNAME, _CONFIG_FILENAME)
     elif sys.platform.startswith('darwin'):
+        user_dir = os.path.expanduser('~')
         config_path = os.path.sep.join([user_dir, 'Library', 'Preferences',
                                         _APP_DIRNAME, _CONFIG_FILENAME])
     else:
+        user_dir = os.path.expanduser('~')
         config_path = os.path.sep.join([user_dir, '.' + _APP_DIRNAME,
                                         _CONFIG_FILENAME])
     return config_path
