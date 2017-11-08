@@ -13,7 +13,7 @@ class Engine(BaseEngine):
     The ENVI Py Engine Class.
     """
 
-    def __init__(self, engine_name):
+    def __init__(self, engine_name, cwd=None):
         """
         Returns an ENVI Py Engine object based on the engine_name.
 
@@ -22,6 +22,7 @@ class Engine(BaseEngine):
         """
         super(Engine, self).__init__(engine_name)
         self._engine_name = engine_name
+        self._cwd = cwd
 
     def task(self, task_name):
         """
@@ -30,7 +31,7 @@ class Engine(BaseEngine):
         :param task_name: The name of the task to retrieve.
         :return: An ENVI Py Engine Task object.
         """
-        return Task(uri=':'.join((self._engine_name, task_name)))
+        return Task(uri=':'.join((self._engine_name, task_name)), cwd=self._cwd)
 
     @memoize
     def tasks(self):
@@ -39,8 +40,9 @@ class Engine(BaseEngine):
 
         :return: A list of task names.
         """
-        result = taskengine.taskcatalog(self._engine_name)
-        return result
+        task_input = {'taskName': 'QueryTaskCatalog'}
+        output = taskengine.execute(task_input, self._engine_name, cwd=self._cwd)
+        return output['outputParameters']['TASKS']
 
     @property
     def name(self):

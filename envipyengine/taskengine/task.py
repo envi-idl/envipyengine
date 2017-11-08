@@ -7,7 +7,6 @@ from ..task import Task as BaseTask
 from ..decorators import memoize
 from . import taskengine
 
-
 class Task(BaseTask):
     """
     Creates a Task Engine task that can submit jobs and list task parameters.
@@ -49,6 +48,9 @@ class Task(BaseTask):
         task_input = {'taskName': self._name,
                       'inputParameters': parameters}
 
+        # cwd passed in takes precedence over task cwd
+        if not cwd:
+            cwd = self._cwd
         return taskengine.execute(task_input, self._engine, cwd=cwd)
 
     @memoize
@@ -56,7 +58,11 @@ class Task(BaseTask):
         """ Retrieve the Task Information
         """
 
-        info = taskengine.taskinfo(self._name, self._engine)
+        task_input = {'taskName': 'QueryTask',
+                      'inputParameters': {"Task_Name": self._name}}
+
+        info = taskengine.execute(task_input, self._engine, cwd=self._cwd)
+
         task_def = info['outputParameters']['DEFINITION']
 
         task_def['name'] = str(task_def.pop('NAME'))
@@ -87,10 +93,15 @@ class Task(BaseTask):
             if 'MAX' in parameter:
                 parameter['max'] = parameter.pop('MAX')
 
+            if parameter['TYPE'].count('['):
+                parameter['type'], parameter['dimensions'] = parameter.pop('TYPE').split('[')
+                parameter['dimensions'] = '[' + parameter['dimensions']
+                parameter['type'] = str(parameter['type'])
+            else:
+                parameter['type'] = str(parameter.pop('TYPE').split('ARRAY')[0])
+
             if 'DIMENSIONS' in parameter:
                 parameter['dimensions'] = parameter.pop('DIMENSIONS')
-
-            parameter['type'] = str(parameter.pop('TYPE').split('ARRAY')[0])
 
             if 'DIRECTION' in parameter:
                 parameter['direction'] = parameter.pop('DIRECTION').lower()

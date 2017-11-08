@@ -42,7 +42,7 @@ with open(os.path.join(here, 'README.rst')) as f:
     long_description = f.read()
 
 setup(name='envipyengine',
-      version='1.0.4',
+      version='1.0.5',
       description='ENVI Python Engine',
       long_description=long_description,
       url='https://github.com/envi-idl/envipyengine',

@@ -1,0 +1,14 @@
+{
+    "name": "getcwd",
+    "base_class": "IDLTaskFromProcedure",
+    "routine": "getcwd",
+    "schema": "idltask_1.0",
+    "parameters": [
+        {
+            "name": "CWD",
+            "direction": "output",
+            "required": true,
+            "type": "STRING"
+        }
+    ]
+}

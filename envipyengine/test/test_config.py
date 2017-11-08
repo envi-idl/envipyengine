@@ -5,11 +5,8 @@ Tests the GSF Task interface
 import unittest
 import os
 
-try:
-    from ConfigParser import NoOptionError
-except ImportError:
-    from configparser import NoOptionError
 
+from ..error import NoConfigOptionError
 import envipyengine
 
 
@@ -83,7 +80,7 @@ class TestEngine(unittest.TestCase):
 
     def test_get_invalid(self):
         """ Error thrown when property does not exist """
-        with self.assertRaises(NoOptionError):
+        with self.assertRaises(NoConfigOptionError):
             envipyengine.config.get('engine')
 
     def test_remove_user_setting(self):
@@ -92,7 +89,7 @@ class TestEngine(unittest.TestCase):
         envipyengine.config.set('engine', value)
 
         envipyengine.config.remove('engine')
-        with self.assertRaises(NoOptionError):
+        with self.assertRaises(NoConfigOptionError):
             envipyengine.config.get('engine')
 
     def test_remove_sys_setting(self):
@@ -101,7 +98,7 @@ class TestEngine(unittest.TestCase):
         envipyengine.config.set('engine', value, system=True)
 
         envipyengine.config.remove('engine', system=True)
-        with self.assertRaises(NoOptionError):
+        with self.assertRaises(NoConfigOptionError):
             envipyengine.config.get('engine')
 
     def test_set_get_environment_user(self):
@@ -125,7 +122,7 @@ class TestEngine(unittest.TestCase):
         self.assertTrue(os.path.exists(self.sys_file))
 
     def test_get_environment_empty(self):
-        """ Empty dictionary returned if no environment settings """
+        """ None returned if no environment settings """
         result = envipyengine.config.get_environment()
         self.assertEqual(result, {})
 

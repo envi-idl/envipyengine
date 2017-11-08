@@ -23,9 +23,7 @@ class Task(with_metaclass(ENVIPyMeta, object)):
     Create an Engine object for ENVI and get a task
 
     >>> envi_engine = Engine('ENVI')
-    >>> task = service.task('SpectralIndex')
-    >>> print(type(task))
-    <class 'envipyengine.taskengine.task.Task'>
+    >>> task = envi_engine.task('SpectralIndex')
 
     Investigate task information.
 
@@ -72,14 +70,17 @@ parameters: ${parameters}
         return self.__str__()
 
     @abstractmethod
-    def __init__(self, uri=None):
+    def __init__(self, uri=None, cwd=None):
         """
         Returns an ENVI Py Engine Task object based on the task name.
 
-        :param name: A String representing the unique id of the task.
+        :param uri: A String representing the unique id of the task.
+        :param cwd: A String representing the current working directory
+                    for the engine execution.
         :return: None
         """
         self._uri = uri
+        self._cwd = cwd
 
     @abstractproperty
     def name(self):
@@ -148,6 +149,7 @@ parameters: ${parameters}
         Executes a synchronous task using the Task Engine
 
         :param parameters: A dictionary of key-value pairs of parameter names and values. The dictionary serves as input to the job.
+        :param cwd: Set to the current working directory the engine will run in.  Defaults to the python current working directory if none specified.
         :return: A dictionary containing the Task Engine output.
         """
         pass

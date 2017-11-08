@@ -12,7 +12,7 @@ from collections import OrderedDict
 from .. import config
 from ..error import TaskEngineNotFoundError
 from ..error import TaskEngineExecutionError
-
+from ..error import NoConfigOptionError
 
 def execute(input_params, engine, cwd=None):
     """
@@ -28,25 +28,35 @@ def execute(input_params, engine, cwd=None):
              by the Task Engine.
     """
 
-    taskengine_exe = config.get('engine')
     try:
-        engine_args = config.get('engine-args')
-    except Exception as e:
-        engine_args = ''
-
-    # Get environment overrides if they exist
-    environment = config.get_environment()
-    if not environment:
-        environment = None
+        taskengine_exe = config.get('engine')
+    except NoConfigOptionError:
+        raise TaskEngineNotFoundError(
+            "Task Engine config option not set." +
+            "\nPlease verify the 'engine' configuration setting.")
 
     if not os.path.exists(taskengine_exe):
         raise TaskEngineNotFoundError(
             "Task Engine executable not found." +
             "\nPlease verify the 'engine' configuration setting.")
 
+    # Get any arguments for the taskengine
+    engine_args = None
+    try:
+        engine_args = config.get('engine-args')
+    except NoConfigOptionError:
+        pass
+
+    # Get environment overrides if they exist
+    environment = None
+    config_environment = config.get_environment()
+    if config_environment:
+        environment = os.environ.copy()
+        environment.update(config_environment)
+
     # Build up the args vector for popen
     args = [taskengine_exe, engine]
-    if engine_args is not '':
+    if engine_args:
         args.append(engine_args)
 
     # Hide the Console Window on Windows OS
@@ -54,7 +64,6 @@ def execute(input_params, engine, cwd=None):
     if sys.platform.startswith('win'):
         startupinfo = subprocess.STARTUPINFO()
         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-
     input_json = json.dumps(input_params)
     process = Popen(args,
                     stdout=PIPE,
@@ -74,28 +83,3 @@ def execute(input_params, engine, cwd=None):
     else:
         return json.loads(stdout, object_pairs_hook=OrderedDict)
 
-
-def taskinfo(task_name, engine):
-    """
-    Helper function to call the QueryTask task given the name of a task
-
-    :param task_name: The name of the Task
-    :param engine: String specifying Task Engine type to run (ENVI, IDL, etc.)
-    :return: A python dictionary containing the Task definition information.
-    """
-    task_input = {'taskName': 'QueryTask',
-                  'inputParameters': {"Task_Name": task_name}}
-    output = execute(task_input, engine)
-    return output
-
-
-def taskcatalog(engine):
-    """
-    Convenience function for calling QueryTaskCatalog
-
-    :param task_name: The name of the Task
-    :return: A List of known task names
-    """
-    task_input = {'taskName': 'QueryTaskCatalog'}
-    output = execute(task_input, engine)
-    return output['outputParameters']['TASKS']

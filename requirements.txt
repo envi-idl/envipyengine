@@ -1,8 +1,6 @@
-
 coverage==4.1
 pylint==1.5.4
 setuptools==19.2
-
 Sphinx==1.4.1
 Sphinx-PyPI-upload==0.2.1
 sphinx_rtd_theme==0.2.4

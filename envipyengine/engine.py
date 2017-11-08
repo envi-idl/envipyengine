@@ -33,11 +33,13 @@ class Engine(with_metaclass(ENVIPyMeta, object)):
     """
 
     @abstractmethod
-    def __init__(self, engine_name):
+    def __init__(self, engine_name, cwd=None):
         """
         Returns an ENVI Py Engine object based on the engine_name.
 
         :param engine_name: A String specifying the name of the requested engine.
+        :param cwd: A String representing the current working directory
+                    for the engine execution.
         :return: None
         """
         pass

@@ -11,6 +11,7 @@ import inspect
 from envipyengine import Engine
 from envipyengine.error import TaskEngineExecutionError
 
+from .. import test
 
 class TestTask(unittest.TestCase):
     """
@@ -59,10 +60,8 @@ class TestTask(unittest.TestCase):
         os.makedirs(tempdir)
 
         # Input test file is checked into the 'test/data' directory
-        input_raster_url = \
-            os.sep.join([os.path.dirname(inspect.getfile(self.__class__)),
-                         'data',
-                         'qb_boulder_msi'])
+        input_raster_url = os.path.join(test.data_dir(), 'checkerboard.dat')
+        
         input_raster = dict(
             url=input_raster_url,
             factory='URLRaster')
@@ -91,3 +90,12 @@ class TestTask(unittest.TestCase):
         with self.assertRaises(TaskEngineExecutionError):
             # pylint: disable=unused-variable
             parameters = task.parameters
+
+    def test_multidim_task(self):
+        """Verify multidimensional datatype is handled."""
+        task = self.engine.task('ClassificationToShapefile')
+        parameters = task.parameters
+        for parameter in parameters:
+            if parameter['name'] == 'EXPORT_CLASSES':
+                self.assertEqual(parameter['type'], 'STRING')
+                self.assertEqual(parameter['dimensions'], '[*]')

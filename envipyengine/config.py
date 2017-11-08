@@ -67,6 +67,7 @@ except ImportError:
     from configparser import NoOptionError
     from configparser import NoSectionError
 
+from .error import NoConfigOptionError
 
 _APP_DIRNAME = 'envipyengine'
 _CONFIG_FILENAME = 'settings.cfg'
@@ -245,8 +246,14 @@ def get(property_name):
     try:
         property_value = config.get(section, property_name)
     except (NoOptionError, NoSectionError) as error:
-        config = _read_config(_SYSTEM_CONFIG_FILE)
-        property_value = config.get(section, property_name)
+
+        # Try the system config file
+        try:
+            config = _read_config(_SYSTEM_CONFIG_FILE)
+            property_value = config.get(section, property_name)
+        except (NoOptionError, NoSectionError) as error:
+            raise NoConfigOptionError(error)
+
     return property_value
 
 
