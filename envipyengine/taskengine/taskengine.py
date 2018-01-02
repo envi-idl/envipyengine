@@ -69,17 +69,17 @@ def execute(input_params, engine, cwd=None):
                     stdout=PIPE,
                     stdin=PIPE,
                     stderr=PIPE,
-                    universal_newlines=True,
                     cwd=cwd,
                     env=environment,
                     startupinfo=startupinfo)
-    stdout, stderr = process.communicate(input=input_json)
+    # taskengine output is in UTF8.  Encode/Decode to UTF8                
+    stdout, stderr = process.communicate(input=input_json.encode('utf-8'))
     if process.returncode != 0:
         if stderr != '':
-            raise TaskEngineExecutionError(stderr)
+            raise TaskEngineExecutionError(stderr.decode('utf-8'))
         else:
             raise TaskEngineExecutionError(
                 'Task Engine exited with code: ' + str(process.returncode))
     else:
-        return json.loads(stdout, object_pairs_hook=OrderedDict)
+        return json.loads(stdout.decode('utf-8'), object_pairs_hook=OrderedDict)
 
