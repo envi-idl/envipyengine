@@ -64,7 +64,7 @@ def execute(input_params, engine, cwd=None):
     if sys.platform.startswith('win'):
         startupinfo = subprocess.STARTUPINFO()
         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-    input_json = json.dumps(input_params)
+    input_json = json.dumps(input_params, ensure_ascii=False)
     process = Popen(args,
                     stdout=PIPE,
                     stdin=PIPE,

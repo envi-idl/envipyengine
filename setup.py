@@ -42,14 +42,26 @@ with open(os.path.join(here, 'README.rst')) as f:
     long_description = f.read()
 
 setup(name='envipyengine',
-      version='1.0.6',
+      version='1.0.8',
       description='ENVI Python Engine',
       long_description=long_description,
       url='https://github.com/envi-idl/envipyengine',
-      author='Exelis Visual Information Solutions, Inc.',
+      author='Harris Geospatial Solutions, Inc.',
       packages=['envipyengine',
                 'envipyengine.taskengine'],
       scripts=['scripts/envipyengineconfig.py'],
+      extras_require={
+        'dev': [
+            'coverage',
+            'pylint',
+            'Sphinx',
+            'Sphinx-PyPI-upload',
+            'sphinx_rtd_theme',
+            'twine',
+            'unittest-xml-reporting',
+            'wheel'
+        ]
+      },
       cmdclass=dict(test=TestCommand),
       license='MIT',
       keywords='envi idl'
