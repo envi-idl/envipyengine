@@ -1,7 +1,7 @@
 .. _envipyengine:
 
 ***********************
-ENVI :sup:`®` Py Engine
+ENVI Py Engine
 ***********************
 
 ENVI Py Engine provides a client Python package, named envipyengine, to run ENVI analytics provided by ENVI Desktop.
@@ -9,7 +9,7 @@ The Python package provides the ability to query for available tasks, retrieve t
 
 There is an additional client Python package available, named envipyarc, to provide the ability to run ENVI analytics through ArcMap and ArcGIS Pro.  
 
-See http://www.harrisgeospatial.com/ for more details on product offerings.
+See https://www.l3harrisgeospatial.com/ for more details on product offerings.
 
 
 Usage
