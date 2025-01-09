@@ -42,11 +42,11 @@ with open(os.path.join(here, 'README.rst')) as f:
     long_description = f.read()
 
 setup(name='envipyengine',
-      version='1.0.8',
+      version='1.0.9',
       description='ENVI Python Engine',
       long_description=long_description,
       url='https://github.com/envi-idl/envipyengine',
-      author='Harris Geospatial Solutions, Inc.',
+      author='NV5 Geospatial Solutions, Inc.',
       packages=['envipyengine',
                 'envipyengine.taskengine'],
       scripts=['scripts/envipyengineconfig.py'],

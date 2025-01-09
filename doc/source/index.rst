@@ -9,7 +9,7 @@ The Python package provides the ability to query for available tasks, retrieve t
 
 There is an additional client Python package available, named envipyarc, to provide the ability to run ENVI analytics through ArcMap and ArcGIS Pro.  
 
-See https://www.l3harrisgeospatial.com/ for more details on product offerings.
+See https://www.nv5geospatialsoftware.com/ for more details on product offerings.
 
 
 Usage

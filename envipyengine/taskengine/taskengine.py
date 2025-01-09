@@ -4,6 +4,7 @@ The Taskengine module provides functions for querying and running tasks.
 
 import sys
 import os
+import shlex
 
 from subprocess import Popen, PIPE
 import subprocess
@@ -43,7 +44,8 @@ def execute(input_params, engine, cwd=None):
     # Get any arguments for the taskengine
     engine_args = None
     try:
-        engine_args = config.get('engine-args')
+        engine_arg_string = config.get('engine-args')
+        engine_args = shlex.split(engine_arg_string)
     except NoConfigOptionError:
         pass
 
@@ -57,7 +59,7 @@ def execute(input_params, engine, cwd=None):
     # Build up the args vector for popen
     args = [taskengine_exe, engine]
     if engine_args:
-        args.append(engine_args)
+        args.extend(engine_args)
 
     # Hide the Console Window on Windows OS
     startupinfo = None
